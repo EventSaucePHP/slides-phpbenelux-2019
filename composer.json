@@ -1,0 +1,14 @@
+{
+    "name": "frankdejonge/phpbenelux-event-sourcing",
+    "require": {
+        "eventsauce/eventsauce": "^0.5.0",
+        "eventsauce/doctrine-message-repository": "^0.5.0",
+        "phpunit/phpunit": "^7.5"
+    },
+    "authors": [
+        {
+            "name": "Frank de Jonge",
+            "email": "info@frenky.net"
+        }
+    ]
+}
