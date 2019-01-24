@@ -252,7 +252,7 @@
                         In a given <span class="text-red">context</span>,<br/>
                         when handling <span class="text-red">input</span><br/>
                         a <span class="text-red">decision</span> is made<br/>
-                        which causes a <span class="text-red">result</span>.
+                        which then causes a <span class="text-red">result</span>.
                     </h3>
                 </section>
                 <!--<section data-title-hidden data-background-color="#fff">-->
@@ -1172,6 +1172,8 @@ class SynchronousMessageDispatcher implements MessageDispatcher
 
 
 
+
+
                 }
                     </code></pre>
                 </section>
@@ -1191,7 +1193,9 @@ class SynchronousMessageDispatcher implements MessageDispatcher
                             $currentHighest = $this->purchases->highest($period);
 
                             if ($currentHighest < $event->amount()) {
-                                $this->purchases->updateHighest($event->amount());
+                                $this->purchases->updateHighest(
+                                    $period, $event->amount()
+                                );
                             }
                         }
                     }
@@ -1373,28 +1377,6 @@ class PersonalBudget
                         is ready to make a <span class="text-red">decision</span>.
                     </blockquote>
                 </section>
-                <section>
-                    <h3>
-                        <ol>
-                            <li><span class="text-re">Release events</span></li>
-                            <li><span class="text-re">Persist events</span></li>
-                            <li><span class="text-re">Dispatch events</span></li>
-                        </ol>
-                    </h3>
-                </section>
-                <section data-title-hidden data-background-color="#fff">
-                    <pre data-line="9" class="language-php"><code data-trim>
-                        $personalBudget = $repository->retrieve($id);
-
-                        if ($personalBudget->spend(amount_to_spend())) {
-                            echo "Spending succeeded";
-                        } else {
-                            echo "Spending failed";
-                        }
-
-                        $repository->persist($personalBudget);
-                    </code></pre>
-                </section>
 
                 <section>
                     <h2>How about <span class="text-red">tests</span>?</h2>
@@ -1538,6 +1520,29 @@ class PersonalBudget
                     </code></pre>
                 </section>
 
+                <section data-background-color="#fff">
+                    <pre data-line="18" class="language-php"><code data-include="spend_150_includes.php" data-filename="spend_150.php" data-trim>
+                        $messageRepository = new InMemoryMessageRepository();
+                        $aggregateRootRepository = new AggregateRootRepository(
+                            PersonalBudget::class,
+                            $messageRepository
+                        );
+
+                        $id = AggregateRootId::create();
+                        $headers = [Header::AGGREGATE_ROOT_ID => $id];
+                        $messageRepository->persist(
+                            new Message(new BudgetWasIncreased(100), $headers)
+                        );
+
+                        $budget = $aggregateRootRepository->retrieve($id);
+
+                        $budget->spend(150);
+
+                        $aggregateRootRepository->persist($budget);
+                        var_dump($messageRepository->lastCommit());
+                    </code></pre>
+                </section>
+
                 <section data-background-color="#3d4852">
                     <blockquote>
                         <span class="text-red">Given</span><br/>
@@ -1613,6 +1618,25 @@ class PersonalBudget
                 </section>
 
                 <section>
+                    <h2 class="text-red">When to apply this:</h2>
+                    <h3>
+                        <ul>
+                            <li>Process modelling</li>
+                            <li>Auditing requirements</li>
+                            <li>Need to communicate change</li>
+                            <li>Need different kinds of read&nbsp;models</li>
+                        </ul>
+                    </h3>
+                </section>
+
+                <section>
+                    <h2>With Event Sourcing</h2>
+                    <h3>Simple tasks are more work.</h3>
+                    <h3>Difficult tasks are easier.</h3>
+                    <h3 class="text-red">You can re-interpret events when you have new insights.</h3>
+                </section>
+
+                <section>
                     <img src="/static/logo.svg" width="240px" alt=""/>
                     <h2>EventSauce</h2>
                 </section>
@@ -1622,11 +1646,14 @@ class PersonalBudget
                         ✅ Event Sourcing<br/>
                         ✅ Test Tooling<br/>
                         ✅ Code Generation<br/>
-                        ✅ All Parts Replaceable<br/>
                     </blockquote>
                 </section>
 
-
+                <section>
+                    <h3>I'm</h3>
+                    <h2 class="text-red">@frankdejonge</h2>
+                    <h3>Thank you for your time.</h3>
+                </section>
 
 			</div>
 		</div>
