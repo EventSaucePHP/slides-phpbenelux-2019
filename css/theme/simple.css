@@ -82,8 +82,8 @@ header {
 }
 
 .reveal [data-background-color="#3d4852"] blockquote .text-white {
-    color: #3d4852;
-    background: white;
+    color: rgba(255, 255, 255, .8);
+    background: rgba(0, 0, 0, .5);
     padding-left: .15em;
     padding-right: .15em;
     transform: rotate(-5deg) skew(-5deg) !important;

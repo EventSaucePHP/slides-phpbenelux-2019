@@ -1,6 +1,6 @@
 <?php
 
-include __DIR__.'/spend_150_includes.php';
+include_once __DIR__.'/spend_150_includes.php';
 
 use EventSauce\EventSourcing\AggregateRootId as Id;
 use EventSauce\EventSourcing\AggregateRootTestCase;

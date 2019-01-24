@@ -6,7 +6,6 @@ use EventSauce\EventSourcing\ConstructingAggregateRootRepository;
 use EventSauce\EventSourcing\Header;
 use EventSauce\EventSourcing\InMemoryMessageRepository;
 use EventSauce\EventSourcing\Message;
-use EventSauce\EventSourcing\Serialization\SerializableEvent;
 use EventSauce\EventSourcing\UuidAggregateRootId;
 
 include_once __DIR__ . '/../vendor/autoload.php';
@@ -21,3 +20,9 @@ include_once __DIR__ . '/budget_was_increased.php';
 include_once __DIR__ . '/budget_was_insufficient.php';
 include_once __DIR__ . '/purchase_was_made.php';
 include_once __DIR__ . '/personal_budget.php';
+
+$personalBudget = new PersonalBudget(AggregateRootId::create());
+
+
+
+

@@ -1,6 +1,6 @@
 <?php
 
-include __DIR__.'/../scripts/entity_models.php';
+include_once __DIR__.'/../scripts/entity_models.php';
 
 class BankAccountRepository
 {
