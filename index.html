@@ -826,6 +826,7 @@ interface AggregateRootRepository
                             public function persist(AggregateRoot $aggregate)
                             {
                                 $events = $aggregate->releaseEvents();
+                                $aggregateRootId = $aggregate->aggregateRootId();
                                 $headers = [Header::AGGREGATE_ROOT_ID => $aggregateRootId];
                                 $messages = array_map(function (object $event) use ($headers) {
                                     return new Message($event, $headers);
@@ -845,6 +846,7 @@ interface AggregateRootRepository
                             public function persist(AggregateRoot $aggregate)
                             {
                                 $events = $aggregate->releaseEvents();
+                                $aggregateRootId = $aggregate->aggregateRootId();
                                 $headers = [Header::AGGREGATE_ROOT_ID => $aggregateRootId];
                                 $messages = array_map(function (object $event) use ($headers) {
                                     return new Message($event, $headers);
@@ -858,12 +860,13 @@ interface AggregateRootRepository
                 </section>
 
                 <section data-title-hidden data-background-color="#fff">
-                    <pre data-line="6-9" class="language-php"><code data-trim>
+                    <pre data-line="7-10" class="language-php"><code data-trim>
                         class AggregateRootRepository
                         {
                             public function persist(AggregateRoot $aggregate)
                             {
                                 $events = $aggregate->releaseEvents();
+                                $aggregateRootId = $aggregate->aggregateRootId();
                                 $headers = [Header::AGGREGATE_ROOT_ID => $aggregateRootId];
                                 $messages = array_map(function (object $event) use ($headers) {
                                     return new Message($event, $headers);
@@ -877,12 +880,13 @@ interface AggregateRootRepository
                 </section>
 
                 <section data-title-hidden data-background-color="#fff">
-                    <pre data-line="11-12" class="language-php"><code data-trim>
+                    <pre data-line="12-13" class="language-php"><code data-trim>
                         class AggregateRootRepository
                         {
                             public function persist(AggregateRoot $aggregate)
                             {
                                 $events = $aggregate->releaseEvents();
+                                $aggregateRootId = $aggregate->aggregateRootId();
                                 $headers = [Header::AGGREGATE_ROOT_ID => $aggregateRootId];
                                 $messages = array_map(function (object $event) use ($headers) {
                                     return new Message($event, $headers);
