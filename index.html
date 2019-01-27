@@ -326,7 +326,7 @@
                     </code></pre>
                 </section>
                 <section data-title-hidden data-background-color="#fff">
-                    <pre class="language-php"><code data-trim>
+                    <pre class="language-php"><code data-include="bank_entity_repository.php" data-filename="entity_usage.php" data-trim>
                         $personalBudget = $repository->retrieve($id);
 
                         if ($personalBudget->spend(amount_to_spend())) {
@@ -339,7 +339,7 @@
                     </code></pre>
                 </section>
                 <section data-title-hidden data-background-color="#fff">
-                    <pre data-line="1" class="language-php"><code data-trim>
+                    <pre data-line="1" class="language-php"><code data-include="bank_entity_repository.php" data-filename="entity_usage.php" data-trim>
                         $personalBudget = $repository->retrieve($id);
 
                         if ($personalBudget->spend(amount_to_spend())) {
@@ -352,7 +352,7 @@
                     </code></pre>
                 </section>
                 <section data-title-hidden data-background-color="#fff">
-                    <pre data-line="3,5,7" class="language-php"><code data-trim>
+                    <pre data-line="3,5,7" class="language-php"><code data-include="bank_entity_repository.php" data-filename="entity_usage.php" data-trim>
                         $personalBudget = $repository->retrieve($id);
 
                         if ($personalBudget->spend(amount_to_spend())) {
@@ -365,7 +365,7 @@
                     </code></pre>
                 </section>
                 <section data-title-hidden data-background-color="#fff">
-                    <pre data-line="4,6,9" class="language-php"><code data-trim>
+                    <pre data-line="4,6,9" class="language-php"><code data-include="bank_entity_repository.php" data-filename="entity_usage.php" data-trim>
                         $personalBudget = $repository->retrieve($id);
 
                         if ($personalBudget->spend(amount_to_spend())) {
@@ -491,6 +491,13 @@
                         <span class="text-red">Event</span><br/>
                         a representation of a historical fact; something that happened
                         in the past.
+                    </blockquote>
+                </section>
+
+                <section data-background-color="#3d4852">
+                    <blockquote>
+                        <span class="text-red">Event</span><br/>
+                        a value-object; an object that represents a value<br/><br/>
                     </blockquote>
                 </section>
 
@@ -1185,11 +1192,11 @@ class SynchronousMessageDispatcher implements MessageDispatcher
                     public function handle(Message $message)
                     {
                         $event = $message->event();
-                        $period = substr(
-                            $message->header(Header::TIME_OF_RECORDING), 0, 7
-                        );
 
                         if ($event instanceof PurchaseWasMade) {
+                            $period = substr(
+                                $message->header(Header::TIME_OF_RECORDING), 0, 7
+                            ); // 2019-01
                             $currentHighest = $this->purchases->highest($period);
 
                             if ($currentHighest < $event->amount()) {
@@ -1376,6 +1383,20 @@ class PersonalBudget
                         A <span class="text-red">reconstituted</span> aggregate
                         is ready to make a <span class="text-red">decision</span>.
                     </blockquote>
+                </section>
+
+                <section data-title-hidden data-background-color="#fff">
+                    <pre class="language-php"><code data-include="bank_entity_repository.php" data-filename="entity_usage.php" data-trim>
+                        $personalBudget = $repository->retrieve($id);
+
+                        if ($personalBudget->spend(amount_to_spend())) {
+                            echo "Spending succeeded";
+                        } else {
+                            echo "Spending failed";
+                        }
+
+                        $repository->persist($personalBudget);
+                    </code></pre>
                 </section>
 
                 <section>
@@ -1633,7 +1654,6 @@ class PersonalBudget
                     <h2>With Event Sourcing</h2>
                     <h3>Simple tasks are more work.</h3>
                     <h3>Difficult tasks are easier.</h3>
-                    <h3 class="text-red">You can re-interpret events when you have new insights.</h3>
                 </section>
 
                 <section>
